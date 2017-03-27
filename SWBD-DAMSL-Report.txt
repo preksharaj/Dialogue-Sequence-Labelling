@@ -1,0 +1,75 @@
+Assignment 3 Report
+
+Name:Preksha Raj Shimoga Basavaraja
+
+1. If you included files other than baseline_crf.py, advanced_crf.py, evaluate_model.py, and hw3_corpus_tool.py, or modified hw3_corpus_tool.py please describe what the files do and/or your modifications to hw3_corpus_tool.py.
+ I have used the hw3_corpus_tool.py code and placed it inside all baseline_crf.py and advanced_crf.py and evaluate_model.py to read the CSV files from the directory.
+ I have made a small change in the get_data(dirname) function from line 23-32.This was done to see if the dirname is the devdir then I am appending all the filenames into an ordered dictionary called file_list as the keys and the values is the length of each file.
+ This I will use later to append the filename and the respective labels to the ouptutfile when generating the labels for each file.(Used in line 155-159 in baseline_crf.py)
+ 
+
+2. Describe how you evaluated your baseline and advanced features
+ I manually divided the total 1076 files into 75% used for training and 25% used for Developement.
+ I randomly choose 269 files which is the 25% of the labelled data and placed it in the dev folder to detect the labels of these files-unlabelled files
+ Then I placed 807 files of labelled data in a folder called input which is used for training.
+ 
+ Then in order to run the baseline_crf.py this was used:
+	Python baseline_crf.py <INPUTDIR> <TESTDIR> <OUTPUTFILE>
+
+	eg:	
+
+	Python baseline_crf.py input dev output1.txt
+-------------------------------------------------------
+To run advanced_crf.py was run using
+	Python advanced_crf.py <INPUTDIR> <TESTDIR> <OUTPUTFILE>
+	
+	eg:
+
+	Python advanced_crf.py input dev output2.txt
+-------------------------------------------------------
+
+output1.txt and outptut2.txt were the two output files generated 
+In order to calculate the accuracy, evaluate_model.py was used
+Here the dev directory is used which has files with labels and the ouptut files are passed one by one to get the accuracy of each baseline as well as advanced.
+The ouptut stats are printed to the terminal.
+
+	evaluate_model.py DEVDIR OUTPUTFILE
+
+	eg:
+	
+	Python evaluate_model.py dev output1.txt
+------------------------------------------------------
+
+
+3. Describe your advanced feature set.
+
+Advanced Features considered:
+	
+First 4 features are the same as the given baseline features which are
+
+a) If the speaker has changed in comparison to previous utterance. (speaker!=previous '1' indicated the speaker has changed ;'0' indicated the speaker has not changed)
+b) If the utterance is the first utterance of the dialogue.(if line_no==1 '1' indicated that is the first line of the dialogue; '0' indiactes that it is not the first line of dialogue)
+c) Every token in the utterance (refers to TOKEN_<unigram value>)
+d) Every pos tag in the utterance (refers to POS_<unigram value>)
+
+
+4. If you tried alternate advanced feature sets, please describe them.
+
+In addition to the 4 baseline features mentioned above, the following features were also considered:
+
+a) Whether the utterance is a question ( if '?' is present in the list of tokens)
+b) Bigram of TOKENS(sequence of two adjacent elements from a string of tokens; refers to TOKEN_<bigram value>)
+c) Bigram of POS tags(sequence of two adjacent elements from a string of pos; refers to POS_<bigram value>)
+
+5. Accuracy of baseline features was:
+ Number of correct labels:37527/51933
+Accuracy:72.26%
+
+
+6. Accuracy of advanced features was:
+ Number of correct labels:38148/51933
+ Accuracy: 73.59%
+
+
+	
+	
